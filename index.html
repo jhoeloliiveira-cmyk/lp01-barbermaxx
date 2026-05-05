@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BarberMaxx — Professional Barber Equipment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── TOKENS ────────────────────────────────── */
+    :root {
+      --blue:        #4F86C6;
+      --blue-dark:   #3a6eaa;
+      --blue-light:  #6b9fd4;
+      --black:       #0a0a0a;
+      --gray-900:    #111111;
+      --gray-800:    #1a1a1a;
+      --gray-700:    #262626;
+      --gray-600:    #333333;
+      --gray-400:    #666666;
+      --gray-300:    #808080;
+      --white:       #ffffff;
+      --font-display: 'Anton', 'Impact', sans-serif;
+      --font-body:    'Montserrat', 'Helvetica Neue', sans-serif;
+      --radius-sm:   4px;
+      --radius-md:   6px;
+      --radius-lg:   8px;
+    }
+
+    /* ── BASE ──────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--black);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    /* ── NAV ───────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo-img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-cta {
+      background: var(--blue);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: background 200ms ease;
+      text-decoration: none;
+    }
+
+    .nav-cta:hover { background: var(--blue-dark); }
+
+    /* ── HERO ──────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=80&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.35);
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(10,10,10,0.92) 45%,
+        rgba(10,10,10,0.3) 100%
+      );
+    }
+
+    .hero-gradient-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 220px;
+      background: linear-gradient(to top, var(--black), transparent);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 140px 40px 100px;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(79,134,198,0.15);
+      border: 1px solid rgba(79,134,198,0.4);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 28px;
+    }
+
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 24px;
+      max-width: 680px;
+    }
+
+    /* Animated rotating words */
+    .hero-rotating-line {
+      display: block;
+      position: relative;
+      height: 1.05em;
+      overflow: hidden;
+    }
+
+    .hero-word {
+      display: block;
+      color: var(--blue);
+      animation: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+
+    .hero-word.slide-in {
+      animation: wordIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-word.slide-out {
+      animation: wordOut 0.4s cubic-bezier(0.55, 0, 0.45, 1) forwards;
+    }
+
+    @keyframes wordIn {
+      from { transform: translateY(110%); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    @keyframes wordOut {
+      from { transform: translateY(0);     opacity: 1; }
+      to   { transform: translateY(-110%); opacity: 0; }
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 1.8vw, 20px);
+      line-height: 1.6;
+      color: var(--gray-300);
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 16px 32px;
+      cursor: pointer;
+      transition: background 200ms ease, transform 150ms ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn-primary:active { transform: scale(0.97); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius-md);
+      padding: 16px 32px;
+      cursor: pointer;
+      transition: border-color 200ms ease, background 200ms ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--blue);
+      background: rgba(79,134,198,0.08);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+    }
+
+    .hero-stat-value {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-top: 4px;
+    }
+
+    /* ── BENEFITS ──────────────────────────────── */
+    .benefits {
+      position: relative;
+      padding: 96px 40px;
+      overflow: hidden;
+    }
+
+    .benefits-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1599351431613-18ef1fdd27e1?w=1600&q=80&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      filter: blur(3px) brightness(0.18);
+      transform: scale(1.04);
+    }
+
+    .benefits-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.55);
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--gray-300);
+      max-width: 480px;
+    }
+
+    .benefits-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .benefits-header {
+      margin-bottom: 64px;
+      text-align: center;
+    }
+
+    .benefits-header .section-sub {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px dashed rgba(255,255,255,0.15);
+    }
+
+    .benefit-card {
+      position: relative;
+      overflow: hidden;
+      padding: 36px 32px;
+      border-right: 1px dashed rgba(255,255,255,0.15);
+      border-bottom: 1px dashed rgba(255,255,255,0.15);
+      background: transparent;
+      transition: background 300ms ease;
+    }
+
+    .benefit-card:nth-child(3n) { border-right: none; }
+    .benefit-card:nth-child(n+4) { border-bottom: none; }
+
+    .benefit-card:hover { background: rgba(79,134,198,0.07); }
+
+    /* Grid pattern overlay */
+    .benefit-card-pattern {
+      pointer-events: none;
+      position: absolute;
+      top: 0; left: 50%;
+      margin-top: -8px;
+      margin-left: -80px;
+      width: 100%; height: 100%;
+      mask-image: linear-gradient(white, transparent);
+      -webkit-mask-image: linear-gradient(white, transparent);
+      opacity: 0.6;
+    }
+
+    .benefit-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .benefit-icon svg {
+      width: 28px;
+      height: 28px;
+      color: rgba(255,255,255,0.7);
+      stroke-width: 1.2;
+    }
+
+    .benefit-title {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-top: 40px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .benefit-text {
+      font-size: 13px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.5);
+      font-weight: 400;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Scroll-in animation */
+    .anim-fade {
+      opacity: 0;
+      transform: translateY(-10px);
+      filter: blur(4px);
+      transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+    }
+
+    .anim-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+
+    /* ── FORM SECTION ──────────────────────────── */
+    .form-section {
+      background: var(--black);
+      padding: 96px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-section::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(79,134,198,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .form-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .form-intro { position: sticky; top: 120px; }
+
+    .form-intro .section-sub { max-width: 400px; margin-bottom: 40px; }
+
+    .form-trust {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--gray-300);
+      font-weight: 500;
+    }
+
+    .form-trust-item svg {
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .form-card {
+      background: var(--gray-800);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 48px 40px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-field.full { grid-column: 1 / -1; }
+
+    .form-field label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray-300);
+    }
+
+    .form-field label .req { color: var(--blue); }
+
+    .form-field input,
+    .form-field select {
+      background: var(--gray-700);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 13px 16px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23808080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+
+    .form-field input::placeholder { color: var(--gray-400); }
+
+    .form-field input:focus,
+    .form-field select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(79,134,198,0.15);
+    }
+
+    .form-field input.error,
+    .form-field select.error {
+      border-color: #e05555;
+      box-shadow: 0 0 0 3px rgba(224,85,85,0.15);
+    }
+
+    .field-error {
+      font-size: 12px;
+      color: #e05555;
+      font-weight: 500;
+      display: none;
+    }
+
+    .form-field.has-error .field-error { display: block; }
+
+    .form-submit {
+      margin-top: 28px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--blue);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 18px 32px;
+      cursor: pointer;
+      transition: background 200ms ease, transform 150ms ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-submit:hover { background: var(--blue-dark); }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .form-disclaimer {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--gray-400);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+    }
+
+    .form-success.visible { display: block; }
+    .form-body.hidden { display: none; }
+
+    .success-icon {
+      width: 72px; height: 72px;
+      background: rgba(79,134,198,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .success-text {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--gray-300);
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      background: var(--gray-900);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 1px;
+      color: var(--white);
+    }
+
+    .footer-logo span { color: var(--blue); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--gray-400);
+    }
+
+    /* ── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+
+      .hero-content { padding: 120px 24px 80px; }
+
+      .benefits { padding: 72px 24px; }
+      .benefits-grid { grid-template-columns: 1fr; gap: 16px; }
+
+      .form-section { padding: 72px 24px; }
+      .form-inner { grid-template-columns: 1fr; gap: 48px; }
+      .form-intro { position: static; }
+      .form-card { padding: 32px 24px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-field.full { grid-column: unset; }
+
+      .hero-stats { gap: 28px; }
+
+      footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-outline { justify-content: center; width: 100%; }
+      .nav-cta { font-size: 12px; padding: 9px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ─────────────────────────────────── -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="uploads/logo-barber-maxx-branco.png" alt="BarberMaxx" class="nav-logo-img" />
+    </a>
+    <a href="#form" class="nav-cta">Find My Machine</a>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-gradient"></div>
+    <div class="hero-gradient-bottom"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Professional Barber Equipment — USA
+      </div>
+
+      <h1 class="hero-title">
+        The Right<br>
+        <span class="hero-animated-wrap">
+          <span class="hero-static-line">Machine For</span>
+          <span class="hero-rotating-line" aria-live="polite">
+            <span class="hero-word" id="heroWord">Every Barber</span>
+          </span>
+        </span>
+      </h1>
+
+      <p class="hero-sub">
+        Clippers, trimmers, shavers and full kits for professional barbers across the United States. Tell us what you need — we'll find it for you.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#form" class="btn-primary">
+          Find My Barber Machine
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+        <a href="#benefits" class="btn-outline">
+          See Benefits
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value">500+</div>
+          <div class="hero-stat-label">Barber Tools</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">50</div>
+          <div class="hero-stat-label">States Covered</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">100%</div>
+          <div class="hero-stat-label">Pro Grade</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BENEFITS ─────────────────────────────── -->
+  <section class="benefits" id="benefits">
+    <div class="benefits-bg"></div>
+    <div class="benefits-overlay"></div>
+    <div class="benefits-inner">
+      <div class="benefits-header anim-fade">
+        <p class="section-label">Why BarberMaxx</p>
+        <h2 class="section-title">Built For<br>The Craft</h2>
+        <p class="section-sub">Everything a professional barber needs, in one place — from starter kits to pro-level equipment.</p>
+      </div>
+
+      <div class="benefits-grid anim-fade" style="transition-delay:0.3s">
+
+        <!-- Card 1 -->
+        <div class="benefit-card">
+          <svg class="benefit-card-pattern" aria-hidden="true">
+            <defs>
+              <pattern id="grid1" width="20" height="20" patternUnits="userSpaceOnUse" x="-12" y="4">
+                <path d="M.5 20V.5H20" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid1)" stroke-width="0"/>
+            <svg x="-12" y="4" overflow="visible">
+              <rect stroke-width="0" width="21" height="21" x="140" y="20" fill="rgba(255,255,255,0.08)"/>
+              <rect stroke-width="0" width="21" height="21" x="160" y="60" fill="rgba(255,255,255,0.08)"/>
+              <rect stroke-width="0" width="21" height="21" x="120" y="80" fill="rgba(255,255,255,0.08)"/>
+            </svg>
+          </svg>
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+              <circle cx="12" cy="13" r="3"></circle>
+            </svg>
+          </div>
+          <div class="benefit-title">Professional Barber Tools</div>
+          <p class="benefit-text">Find clippers, trimmers and shavers made for serious barbers. Every product is vetted for professional use and daily shop demands.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="benefit-card">
+          <svg class="benefit-card-pattern" aria-hidden="true">
+            <defs>
+              <pattern id="grid2" width="20" height="20" patternUnits="userSpaceOnUse" x="-12" y="4">
+                <path d="M.5 20V.5H20" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid2)" stroke-width="0"/>
+            <svg x="-12" y="4" overflow="visible">
+              <rect stroke-width="0" width="21" height="21" x="100" y="40" fill="rgba(255,255,255,0.08)"/>
+              <rect stroke-width="0" width="21" height="21" x="180" y="20" fill="rgba(255,255,255,0.08)"/>
+              <rect stroke-width="0" width="21" height="21" x="140" y="100" fill="rgba(255,255,255,0.08)"/>
+            </svg>
+          </svg>
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <div class="benefit-title">Better Buying Direction</div>
+          <p class="benefit-text">Tell us what you need and we'll help you find the right machine. No guessing — just a straight path to the tool that fits your work.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="benefit-card">
+          <svg class="benefit-card-pattern" aria-hidden="true">
+            <defs>
+              <pattern id="grid3" width="20" height="20" patternUnits="userSpaceOnUse" x="-12" y="4">
+                <path d="M.5 20V.5H20" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid3)" stroke-width="0"/>
+            <svg x="-12" y="4" overflow="visible">
+              <rect stroke-width="0" width="21" height="21" x="160" y="60" fill="rgba(255,255,255,0.08)"/>
+              <rect stroke-width="0" width="21" height="21" x="120" y="20" fill="rgba(255,255,255,0.08)"/>
+              <rect stroke-width="0" width="21" height="21" x="80"  y="80" fill="rgba(255,255,255,0.08)"/>
+            </svg>
+          </svg>
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 12 20 22 4 22 4 12"></polyline>
+              <rect x="2" y="7" width="20" height="5"></rect>
+              <line x1="12" y1="22" x2="12" y2="7"></line>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+            </svg>
+          </div>
+          <div class="benefit-title">Exclusive Barber Deals</div>
+          <p class="benefit-text">Get access to offers and product drops from BarberMaxx. Be the first to know about new arrivals and member-only pricing.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FORM ─────────────────────────────────── -->
+  <section class="form-section" id="form">
+    <div class="form-inner">
+
+      <!-- Left: Intro -->
+      <div class="form-intro">
+        <p class="section-label">Get Matched Now</p>
+        <h2 class="section-title">Tell Us What Barber Tool You're Looking For</h2>
+        <p class="section-sub">Answer a few quick questions so we can help you find the right BarberMaxx machine.</p>
+
+        <div class="form-trust">
+          <div class="form-trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            No spam — we only send what matters
+          </div>
+          <div class="form-trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            A real person will follow up with you
+          </div>
+          <div class="form-trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Available across all 50 US states
+          </div>
+          <div class="form-trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Your information is kept private
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form card -->
+      <div class="form-card">
+
+        <!-- Success message -->
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4F86C6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="success-title">You're All Set!</div>
+          <p class="success-text">Thanks! We received your information. BarberMaxx will contact you soon.</p>
+        </div>
+
+        <!-- Form body -->
+        <div class="form-body" id="formBody">
+          <form id="leadForm" novalidate>
+            <div class="form-grid">
+
+              <div class="form-field full" id="field-name">
+                <label for="fullName">Full Name <span class="req">*</span></label>
+                <input type="text" id="fullName" name="fullName" placeholder="Your full name" autocomplete="name" />
+                <span class="field-error">Please enter your full name.</span>
+              </div>
+
+              <div class="form-field" id="field-email">
+                <label for="email">Email <span class="req">*</span></label>
+                <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" />
+                <span class="field-error">Please enter a valid email.</span>
+              </div>
+
+              <div class="form-field" id="field-phone">
+                <label for="phone">Phone / WhatsApp <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" autocomplete="tel" />
+                <span class="field-error">Please enter your phone number.</span>
+              </div>
+
+              <div class="form-field" id="field-profession">
+                <label for="profession">Are you a professional barber?</label>
+                <select id="profession" name="profession">
+                  <option value="" disabled selected>Select one…</option>
+                  <option value="Yes, I'm a barber">Yes, I'm a barber</option>
+                  <option value="No, I'm buying for personal use">No, I'm buying for personal use</option>
+                  <option value="I'm a barber student">I'm a barber student</option>
+                  <option value="I own a barbershop">I own a barbershop</option>
+                </select>
+              </div>
+
+              <div class="form-field" id="field-state">
+                <label for="state">What state are you in?</label>
+                <select id="state" name="state">
+                  <option value="" disabled selected>Select state…</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                  <option>Texas</option><option>Utah</option><option>Vermont</option>
+                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                </select>
+              </div>
+
+              <div class="form-field" id="field-product">
+                <label for="product">What are you looking for?</label>
+                <select id="product" name="product">
+                  <option value="" disabled selected>Select product…</option>
+                  <option>Clipper</option>
+                  <option>Trimmer</option>
+                  <option>Shaver</option>
+                  <option>Full Barber Kit</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+
+              <div class="form-field" id="field-timeline">
+                <label for="timeline">When do you plan to buy?</label>
+                <select id="timeline" name="timeline">
+                  <option value="" disabled selected>Select timeline…</option>
+                  <option>Today</option>
+                  <option>This week</option>
+                  <option>This month</option>
+                  <option>Just researching</option>
+                </select>
+              </div>
+
+              <div class="form-field full" id="field-budget">
+                <label for="budget">What is your budget?</label>
+                <select id="budget" name="budget">
+                  <option value="" disabled selected>Select budget…</option>
+                  <option>Under $50</option>
+                  <option>$50 - $100</option>
+                  <option>$100 - $200</option>
+                  <option>$200+</option>
+                </select>
+              </div>
+
+            </div><!-- /form-grid -->
+
+            <div class="form-submit">
+              <button type="submit" class="btn-submit" id="submitBtn">
+                Find My Barber Machine
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </div>
+
+            <p class="form-disclaimer">By submitting, you agree to be contacted by BarberMaxx. No spam, ever.</p>
+          </form>
+        </div><!-- /form-body -->
+
+      </div><!-- /form-card -->
+    </div>
+  </section>
+
+  <!-- ── FOOTER ───────────────────────────────── -->
+  <footer>
+    <img src="uploads/logo-barber-maxx-branco.png" alt="BarberMaxx" style="height:36px;width:auto;" />
+    <p class="footer-copy">&copy; 2025 BarberMaxx. All rights reserved. USA.</p>
+  </footer>
+
+  <script>
+    // ── SCROLL ANIMATIONS ───────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.anim-fade').forEach(el => observer.observe(el));
+
+    // ── ANIMATED HERO WORDS ─────────────────────
+    const words = ["Every Barber", "Every Clipper", "Every Trimmer", "Every Shaver", "Every Shop"];
+    let wordIndex = 0;
+    const wordEl = document.getElementById('heroWord');
+
+    function rotateWord() {
+      wordEl.classList.remove('slide-in');
+      wordEl.classList.add('slide-out');
+      wordEl.addEventListener('animationend', function onOut() {
+        wordEl.removeEventListener('animationend', onOut);
+        wordIndex = (wordIndex + 1) % words.length;
+        wordEl.textContent = words[wordIndex];
+        wordEl.classList.remove('slide-out');
+        wordEl.classList.add('slide-in');
+      });
+    }
+
+    // Initial slide-in
+    wordEl.classList.add('slide-in');
+    setInterval(rotateWord, 2200);
+
+    // ── WEBHOOK CONFIG ──────────────────────────
+    const GOOGLE_SHEETS_WEBHOOK_URL = "COLE_AQUI_A_URL_DO_GOOGLE_APPS_SCRIPT";
+
+    // ── FORM VALIDATION & SUBMIT ────────────────
+    const form = document.getElementById('leadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formBody = document.getElementById('formBody');
+    const formSuccess = document.getElementById('formSuccess');
+
+    function setError(fieldId, hasError) {
+      const wrapper = document.getElementById('field-' + fieldId);
+      if (!wrapper) return;
+      wrapper.classList.toggle('has-error', hasError);
+      const input = wrapper.querySelector('input, select');
+      if (input) input.classList.toggle('error', hasError);
+    }
+
+    function validateEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    }
+
+    function validateForm() {
+      let valid = true;
+
+      const name = document.getElementById('fullName').value.trim();
+      const hasName = name.length > 1;
+      setError('name', !hasName);
+      if (!hasName) valid = false;
+
+      const email = document.getElementById('email').value.trim();
+      const hasEmail = validateEmail(email);
+      setError('email', !hasEmail);
+      if (!hasEmail) valid = false;
+
+      const phone = document.getElementById('phone').value.trim();
+      const hasPhone = phone.length >= 7;
+      setError('phone', !hasPhone);
+      if (!hasPhone) valid = false;
+
+      return valid;
+    }
+
+    // Clear error on input
+    document.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('input', () => {
+        const field = el.closest('.form-field');
+        if (field) {
+          field.classList.remove('has-error');
+          el.classList.remove('error');
+        }
+      });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        </svg>
+        Sending…
+      `;
+
+      const payload = {
+        fullName:   document.getElementById('fullName').value.trim(),
+        email:      document.getElementById('email').value.trim(),
+        phone:      document.getElementById('phone').value.trim(),
+        profession: document.getElementById('profession').value,
+        state:      document.getElementById('state').value,
+        product:    document.getElementById('product').value,
+        timeline:   document.getElementById('timeline').value,
+        budget:     document.getElementById('budget').value,
+        submittedAt: new Date().toISOString(),
+      };
+
+      try {
+        await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          mode: 'no-cors',
+        });
+      } catch (err) {
+        // no-cors: treat as success regardless
+        console.warn('Fetch error (may be CORS):', err);
+      }
+
+      // Show success
+      formBody.classList.add('hidden');
+      formSuccess.classList.add('visible');
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = target.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+  <style>
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+  </style>
+
+</body>
+</html>
