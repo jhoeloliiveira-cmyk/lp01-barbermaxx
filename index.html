@@ -8,6 +8,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
+  <!-- Sender.net embed loader -->
+  <script>
+    (function (s, e, n, d, er) {
+      s['Sender'] = er;
+      s[er] = s[er] || function () {
+        (s[er].q = s[er].q || []).push(arguments)
+      }, s[er].l = 1 * new Date();
+      s[er].on = function(event, callback) {
+        s[er].listeners = s[er].listeners || {};
+        (s[er].listeners[event] = s[er].listeners[event] || []).push(callback);
+      };
+      var a = e.createElement(n),
+          m = e.getElementsByTagName(n)[0];
+      a.async = 1;
+      a.src = d;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://cdn.sender.net/accounts_resources/universal.js', 'sender');
+    sender('3ef2e114c52350')
+  </script>
+
   <style>
     /* ── RESET ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,10 +86,13 @@
     }
 
     .nav-logo-img {
-      height: 40px;
+      height: 50px;
       width: auto;
       display: block;
     }
+
+    /* Bump nav height for stacked logo */
+    nav { min-height: 76px; }
 
     .nav-cta {
       background: var(--blue);
@@ -695,7 +718,7 @@
   <!-- ── NAV ─────────────────────────────────── -->
   <nav>
     <a href="#" class="nav-logo">
-      <img src="uploads/logo-barber-maxx-branco.png" alt="BarberMaxx" class="nav-logo-img" />
+      <img src="uploads/barbermaxx_logo_dark.png" alt="BarberMaxx" class="nav-logo-img" />
     </a>
     <a href="#form" class="nav-cta">Find My Machine</a>
   </nav>
@@ -879,8 +902,13 @@
         </div>
       </div>
 
-      <!-- Right: Form card -->
+      <!-- Right: Sender embed -->
       <div class="form-card">
+        <div style="text-align: left" class="sender-form-field" data-sender-form-id="e0RnvK"></div>
+      </div>
+
+      <!-- /old form removed -->
+      <div style="display:none">
 
         <!-- Success message -->
         <div class="form-success" id="formSuccess">
@@ -1002,7 +1030,7 @@
 
   <!-- ── FOOTER ───────────────────────────────── -->
   <footer>
-    <img src="uploads/logo-barber-maxx-branco.png" alt="BarberMaxx" style="height:36px;width:auto;" />
+    <img src="uploads/barbermaxx_logo_dark.png" alt="BarberMaxx" style="height:64px;width:auto;" />
     <p class="footer-copy">&copy; 2025 BarberMaxx. All rights reserved. USA.</p>
   </footer>
 
@@ -1039,99 +1067,7 @@
     wordEl.classList.add('slide-in');
     setInterval(rotateWord, 2200);
 
-    // ── WEBHOOK CONFIG ──────────────────────────
-    const GOOGLE_SHEETS_WEBHOOK_URL = "COLE_AQUI_A_URL_DO_GOOGLE_APPS_SCRIPT";
-
-    // ── FORM VALIDATION & SUBMIT ────────────────
-    const form = document.getElementById('leadForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const formBody = document.getElementById('formBody');
-    const formSuccess = document.getElementById('formSuccess');
-
-    function setError(fieldId, hasError) {
-      const wrapper = document.getElementById('field-' + fieldId);
-      if (!wrapper) return;
-      wrapper.classList.toggle('has-error', hasError);
-      const input = wrapper.querySelector('input, select');
-      if (input) input.classList.toggle('error', hasError);
-    }
-
-    function validateEmail(val) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-    }
-
-    function validateForm() {
-      let valid = true;
-
-      const name = document.getElementById('fullName').value.trim();
-      const hasName = name.length > 1;
-      setError('name', !hasName);
-      if (!hasName) valid = false;
-
-      const email = document.getElementById('email').value.trim();
-      const hasEmail = validateEmail(email);
-      setError('email', !hasEmail);
-      if (!hasEmail) valid = false;
-
-      const phone = document.getElementById('phone').value.trim();
-      const hasPhone = phone.length >= 7;
-      setError('phone', !hasPhone);
-      if (!hasPhone) valid = false;
-
-      return valid;
-    }
-
-    // Clear error on input
-    document.querySelectorAll('input, select').forEach(el => {
-      el.addEventListener('input', () => {
-        const field = el.closest('.form-field');
-        if (field) {
-          field.classList.remove('has-error');
-          el.classList.remove('error');
-        }
-      });
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!validateForm()) return;
-
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite">
-          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-        </svg>
-        Sending…
-      `;
-
-      const payload = {
-        fullName:   document.getElementById('fullName').value.trim(),
-        email:      document.getElementById('email').value.trim(),
-        phone:      document.getElementById('phone').value.trim(),
-        profession: document.getElementById('profession').value,
-        state:      document.getElementById('state').value,
-        product:    document.getElementById('product').value,
-        timeline:   document.getElementById('timeline').value,
-        budget:     document.getElementById('budget').value,
-        submittedAt: new Date().toISOString(),
-      };
-
-      try {
-        await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-          mode: 'no-cors',
-        });
-      } catch (err) {
-        // no-cors: treat as success regardless
-        console.warn('Fetch error (may be CORS):', err);
-      }
-
-      // Show success
-      formBody.classList.add('hidden');
-      formSuccess.classList.add('visible');
-    });
+    // ── WEBHOOK / FORM JS (removed — using Sender.net embed) ─────
 
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a => {
